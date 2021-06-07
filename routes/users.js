@@ -1,9 +1,9 @@
 const express = require('express');
-const { getMyProfile, patchMyProfile } = require('../controllers/users');
+const { getProfile, patchProfile } = require('../controllers/users');
 
 const usersRoutes = express.Router();
 
-usersRoutes.get('/users/me', getMyProfile);
-usersRoutes.patch('/users/me', patchMyProfile);
+usersRoutes.get('/users/me', getProfile);
+usersRoutes.patch('/users/me', patchProfile);
 
 exports.usersRoutes = usersRoutes;

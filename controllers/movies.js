@@ -42,13 +42,13 @@ exports.createMovie = (req, res, next) => {
 
 exports.deleteMovieById = (req, res, next) => {
   const userId = req.user._id;
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params.id)
     .orFail(new NotFoundError('Карточка с таким id отсутствует в базе'))
     .then((movie) => {
       if (movie.owner.toString() !== userId) {
         throw new ForbiddenError('Вы не можете удалить эту карточку!');
       }
-      Movie.findByIdAndRemove(req.params.movieId)
+      Movie.findByIdAndRemove(req.params.id)
         .then((data) => res.send(data))
         .catch(next);
     })

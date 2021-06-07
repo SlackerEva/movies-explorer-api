@@ -5,6 +5,6 @@ const moviesRoutes = express.Router();
 
 moviesRoutes.get('/movies', getMovies);
 moviesRoutes.post('/movies', express.json(), createMovie);
-moviesRoutes.delete('/movies/movieId', deleteMovieById);
+moviesRoutes.delete('/movies/:id', deleteMovieById);
 
 exports.moviesRoutes = moviesRoutes;

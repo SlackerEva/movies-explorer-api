@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const { createUser, login } = require('./controllers/users');
+const { auth } = require('./middlewares/auth');
 const { usersRoutes } = require('./routes/users');
 const { moviesRoutes } = require('./routes/movies');
 const { middleError } = require('./middlewares/middleError');
@@ -21,6 +23,11 @@ app.get('/crash-test', () => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+app.post('/signup', createUser);
+app.post('/signin', login);
+
+app.use(auth);
 
 app.use(usersRoutes);
 app.use(moviesRoutes);
