@@ -14,7 +14,7 @@ const cardSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  yaer: {
+  year: {
     type: String,
     required: true,
   },
