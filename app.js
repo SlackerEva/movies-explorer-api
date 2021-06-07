@@ -1,10 +1,24 @@
 const express = require('express');
-// Слушаем 3000 порт
-const { PORT = 3000 } = process.env;
+const mongoose = require('mongoose');
 
+const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
 const app = express();
 
-app.listen(PORT, () => {
-    // Если всё работает, консоль покажет, какой порт приложение слушает
-    console.log(`App listening on port ${PORT}`)
-})
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
+async function main() {
+  mongoose.connect(MONGO_URL, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  });
+
+  await app.listen(PORT);
+}
+
+main();
