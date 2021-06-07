@@ -1,0 +1,31 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon ./app.js",
+    "lint": "npx eslint . --ignore-pattern 'node_modules'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SlackerEva/movies-explorer-api.git"
+  },
+  "author": "Lesiv Anna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SlackerEva/movies-explorer-api/issues"
+  },
+  "homepage": "https://github.com/SlackerEva/movies-explorer-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "nodemon": "^2.0.7"
+  }
+}
