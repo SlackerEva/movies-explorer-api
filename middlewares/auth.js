@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const AuthError = require('../errors/auth_error');
 
 dotenv.config();
 
@@ -10,13 +11,13 @@ exports.auth = (req, res, next) => {
   let payload;
   try {
     if (!authorization || !authorization.startsWith('Bearer ')) {
-      return res.status(401).send({ message: 'Необходима авторизация' });
+      throw new AuthError('Необходима авторизация');
     }
 
     const token = authorization.replace('Bearer ', '');
     payload = jwt.verify(token, `${NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'}`);
   } catch (err) {
-    return res.status(401).send({ message: 'Необходима авторизация' });
+    throw new AuthError('Необходима авторизация');
   }
 
   req.user = payload;
