@@ -3,12 +3,10 @@ const NotFoundError = require('../errors/not_found_error');
 const ValidationError = require('../errors/validation_error');
 const ForbiddenError = require('../errors/forbidden_error');
 
-exports.getMovies = (req, res) => {
+exports.getMovies = (req, res, next) => {
   Movie.find()
-    .then((movie) => res.send(movie))
-    .catch(() => {
-      res.status(500).send({ message: 'Произошла ошибка' });
-    });
+    .then((movies) => res.send(movies))
+    .catch(next);
 };
 
 exports.createMovie = (req, res, next) => {
@@ -35,8 +33,9 @@ exports.createMovie = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new ValidationError(err.message));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };
 
@@ -55,7 +54,8 @@ exports.deleteMovieById = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new ValidationError('Введены некорректные данные'));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };

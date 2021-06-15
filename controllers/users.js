@@ -32,14 +32,19 @@ exports.createUser = (req, res, next) => {
     .then((hash) => User.create({
       name, email, password: hash,
     }))
-    .then((user) => res.send(user))
+    .then((user) => res.send({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    }))
     .catch((err) => {
       if (err.name === 'MongoError' || err.code === 11000) {
         next(new CreationError('Для этого email уже создан пльзователь'));
       } else if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new ValidationError(err.message));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };
 
@@ -50,8 +55,9 @@ exports.getProfile = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new ValidationError('Введены некорректные данные'));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };
 
@@ -64,9 +70,12 @@ exports.patchProfile = (req, res, next) => {
     .orFail(() => { throw new NotFoundError('Пользователь по заданному id отсутствует в базе'); })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (err.name === 'MongoError' || err.code === 11000) {
+        next(new CreationError('Вы не можете изменить профиль этого пользователя'));
+      } else if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new ValidationError('Введены некорректные данные'));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };
