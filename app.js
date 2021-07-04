@@ -13,7 +13,7 @@ const { PORT = 3001, MONGO_URL = 'mongodb://localhost:27017/moviesdb' } = proces
 const app = express();
 
 app.use(cors({
-  origin: NODE_ENV === 'production' ? 'https://slacker.students.nomoredomains.monster' : 'http://localhost:3001',
+  origin: NODE_ENV === 'production' ? 'https://slacker.students.nomoredomains.monster' : 'http://localhost:300',
   credentials: true,
 }));
 
