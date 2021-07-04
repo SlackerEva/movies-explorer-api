@@ -12,6 +12,11 @@ dotenv.config();
 const { PORT = 3001, MONGO_URL = 'mongodb://localhost:27017/moviesdb' } = process.env;
 const app = express();
 
+app.use(cors({
+  origin: NODE_ENV === 'production' ? 'https://slacker.students.nomoredomains.monster' : 'http://localhost:3001',
+  credentials: true,
+}));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
